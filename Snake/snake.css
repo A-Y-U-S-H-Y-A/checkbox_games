@@ -1,0 +1,47 @@
+.p2{
+  display: none;
+  margin-top: 0; /* change this to whatever height you want it */
+  line-height: 0px;
+}
+.gb {
+  display: block; /* makes it have a width */
+  content: ""; /* clears default height */
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background: black;
+    border: 1px solid white;
+    margin: 0;
+  }
+  
+  input[type="checkbox"]:hover {
+    filter: brightness(90%);
+  }
+  
+  input[type="checkbox"]:disabled {
+    background: #e6e6e6;
+    pointer-events: none;
+  }
+
+  input[type="checkbox"]:checked {
+    background: green;
+  }
+  
+  input[type="checkbox"]:after {
+    content: '';
+    display: none;
+  }
+  
+  input[type="checkbox"]:checked:after {
+    display: block;
+  }
+  
+  input[type="checkbox"]:disabled:after {
+    border-color: #7b7b7b;
+  }
+  
