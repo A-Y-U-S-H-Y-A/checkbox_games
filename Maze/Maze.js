@@ -14,50 +14,55 @@ var wx,wy;
 
 squaregrid+=1;
 
+function setScore(n){
+    score = n
+    document.getElementById('score').innerHTML=score;
+}
+
+function checkWin(){
+    if(px == wx && py == wy){
+        setScore(score+1)
+        setup()
+    }
+}
+
+function getBox(){
+    return(getBox())
+}
+
+
 document.addEventListener('keydown', function(e) {
-    switch (e.keyCode) {
-        case 37:
-            if(document.getElementById(stringen(px,py)).classList.contains('al')){
-                document.getElementById(stringen(px,py)).checked = false;
+    switch (e.code) {
+        case 'ArrowLeft': //Arrow Left
+            if(getBox().classList.contains('al')){
+                getBox().checked = false;
                 px-=1;
-                document.getElementById(stringen(px,py)).checked = true;
-                if(px == wx && py == wy){
-                    score+=1;
-                    setup();
-                }
+                getBox().checked = true;
+                checkWin()
             }
             break;
-        case 38:
-            if(document.getElementById(stringen(px,py)).classList.contains('at')){
-                document.getElementById(stringen(px,py)).checked = false;
+        case 'ArrowUp': //Arrow Up
+            if(getBox().classList.contains('at')){
+                getBox().checked = false;
                 py+=1;
-                document.getElementById(stringen(px,py)).checked = true;
-                if(px == wx && py == wy){
-                    score+=1;
-                    setup();
-                }
+                getBox().checked = true;
+                checkWin()
             }
             break;
-        case 39:
-            if(document.getElementById(stringen(px,py)).classList.contains('ar')){
-                document.getElementById(stringen(px,py)).checked = false;
+        case 'ArrowRight': // Arrow Right
+            if(getBox().classList.contains('ar')){
+                getBox().checked = false;
                 px+=1;
-                document.getElementById(stringen(px,py)).checked = true;
-                if(px == wx && py == wy){
-                    score+=1;
-                    setup();
-                }
+                getBox().checked = true;
+                checkWin()
             }
             break;
-        case 40:
-            if(document.getElementById(stringen(px,py)).classList.contains('ab')){
-                document.getElementById(stringen(px,py)).checked = false;
+        case 'ArrowDown': //Arrow Down
+            if(getBox().classList.contains('ab')){
+                getBox().checked = false;
                 py-=1;
-                document.getElementById(stringen(px,py)).checked = true;
-                if(px == wx && py == wy){
-                    score+=1;
-                    setup();
-                }
+                getBox().checked = true;
+                checkWin()
             }
             break;
     }
@@ -104,38 +109,38 @@ function sleep(ms){
 }
 
 async function giveup() {
-    document.getElementById(stringen(px,py)).checked = false;
+    getBox().checked = false;
     px=0;py=0;
-    document.getElementById(stringen(px,py)).checked = true;
-    document.getElementById(stringen(px,py)).removeAttribute('visited');
+    getBox().checked = true;
+    getBox().removeAttribute('visited');
     await sleep(2);
     stack.push(stringen(px,py));
     while(true){
         if(px == wx && py == wy){console.log('solved');break;}
-        document.getElementById(stringen(px,py)).checked = true;
+        getBox().checked = true;
         var z = 'n';
-        if((px+1)<squaregrid && document.getElementById(stringen(px+1,py)).hasAttribute('visited') && document.getElementById(stringen(px,py)).classList.contains('ar')){
+        if((px+1)<squaregrid && document.getElementById(stringen(px+1,py)).hasAttribute('visited') && getBox().classList.contains('ar')){
             stack.push(stringen(px+1,py));
             document.getElementById(stringen(px+1,py)).removeAttribute('visited');
             document.getElementById(stringen(px+1,py)).checked = true;
             px+=1;
             z='r';
         }
-        else if((px-1)>=0 && document.getElementById(stringen(px-1,py)).hasAttribute('visited') && document.getElementById(stringen(px,py)).classList.contains('al')){
+        else if((px-1)>=0 && document.getElementById(stringen(px-1,py)).hasAttribute('visited') && getBox().classList.contains('al')){
             stack.push(stringen(px-1,py));
             document.getElementById(stringen(px-1,py)).removeAttribute('visited');
             document.getElementById(stringen(px-1,py)).checked = true;
             px-=1;
             z='l';
         }
-        else if((py+1)<squaregrid && document.getElementById(stringen(px,py+1)).hasAttribute('visited') && document.getElementById(stringen(px,py)).classList.contains('at')){
+        else if((py+1)<squaregrid && document.getElementById(stringen(px,py+1)).hasAttribute('visited') && getBox().classList.contains('at')){
             stack.push(stringen(px,py+1));
             document.getElementById(stringen(px,py+1)).removeAttribute('visited');
             document.getElementById(stringen(px,py+1)).checked = true;
             py+=1;
             z='t';
         }
-        else if((py-1)>=0 && document.getElementById(stringen(px,py-1)).hasAttribute('visited') && document.getElementById(stringen(px,py)).classList.contains('ab')){
+        else if((py-1)>=0 && document.getElementById(stringen(px,py-1)).hasAttribute('visited') && getBox().classList.contains('ab')){
             stack.push(stringen(px,py-1));
             document.getElementById(stringen(px,py-1)).removeAttribute('visited');
             document.getElementById(stringen(px,py-1)).checked = true;
@@ -144,7 +149,7 @@ async function giveup() {
         }
         else{z='n';}
         if(z=='n'){
-            document.getElementById(stringen(px,py)).checked = false;
+            getBox().checked = false;
             stack.pop();
             var tc = stack[stack.length-1];
             py = parseInt(tc.substring(tc.indexOf(',')+1));
@@ -153,6 +158,8 @@ async function giveup() {
         await sleep(0.5);
         
     }
+
+
 
 }
 
